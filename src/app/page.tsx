@@ -3,7 +3,8 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { FiSettings } from "react-icons/fi";
+import { FiShield } from "react-icons/fi";
+import { FaTelegramPlane, FaInstagram } from "react-icons/fa";
 
 
 type Grade = {
@@ -70,6 +71,13 @@ export default function Home() {
       className="min-h-screen bg-cover bg-center"
       style={{ backgroundImage: "url('/bg.jpg')" }}
     >
+      <Link
+        href="/admin/login"
+        className="fixed top-4 left-4 bg-white/90 hover:bg-white p-2 rounded-lg shadow z-50"
+        aria-label="Security"
+      >
+        <FiShield className="w-6 h-6 text-gray-700" />
+      </Link>
       {/* Header */}
       <header className="bg-white shadow-sm border-b">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -83,12 +91,6 @@ export default function Home() {
                 <p className="text-sm text-gray-500">Mobile Learning Platform</p>
               </div>
             </div>
-            <Link
-              href="/admin/login"
-              className="bg-gray-100 hover:bg-gray-200 p-2 rounded-lg transition-colors"
-            >
-              <FiSettings className="w-6 h-6 text-gray-700" aria-label="Settings" />
-            </Link>
           </div>
         </div>
       </header>
@@ -97,7 +99,7 @@ export default function Home() {
       <section className="py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto text-center">
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4"></h2>
-          <p className="text-lg text-gray-600 mb-8 max-w-2xl mx-auto">
+          <p className="text-lg text-white mb-8 max-w-2xl mx-auto">
           2ኛ ጴጥ 1፦10
           "ስለዚህ፥ወንድሞች ሆይ፥መጠራታችኹንና መመረጣችኹን ታጸኑ ዘንድ ከፊት ይልቅ ትጉ እነዚህን ብታደርጉ ከቶ አትሰናከሉምና።"
           </p>
@@ -136,8 +138,31 @@ export default function Home() {
           <div className="text-center text-gray-500 text-sm">
             <p>
               &copy; 2018 የፈጬ ደብረ ገነት ቅድስት ድንግል ማርያም ቤተክርስቲያን የጽርሐ ጽዮን ሰንበት ት/ቤት 
-              Developed by Yeshigeta And Michael
+              Developed by Yeshigeta And Michael 
             </p>
+            <div className="text-center text-gray-500 text-sm"> 
+              <a
+                href="https://t.me/Jt12Ws2"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center mt-2 text-blue-500 hover:text-blue-600"
+                aria-label="Telegram"
+                title="Telegram"
+              >
+                <FaTelegramPlane className="w-6 h-6" />
+              </a>
+              <a
+                href="https://instagram.com/benjamingx54"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center mt-2 ml-3 text-pink-500 hover:text-pink-600"
+                aria-label="Instagram"
+                title="Instagram"
+              >
+                <FaInstagram className="w-6 h-6" />
+              </a>
+            </div>
+
           </div>
         </div>
       </footer>
