@@ -19,8 +19,8 @@ export default function AdminLoginPage() {
     setIsSubmitting(true);
 
     // Simple client-side check for demo credentials
-    const validUsername = "admin";
-    const validPassword = "admin123";
+    const validUsername = "Admin_Miki";
+    const validPassword = "Miki_46@admin";
 
     if (username === validUsername && password === validPassword) {
       // Set authentication state in localStorage
