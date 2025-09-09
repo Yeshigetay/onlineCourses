@@ -26,6 +26,23 @@ export default function AdminDashboardPage() {
   const [searchQuery, setSearchQuery] = useState("");
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [authLoading, setAuthLoading] = useState(true);
+  const [successMessage, setSuccessMessage] = useState<string | null>(null);
+
+  // Listen for success events from the add-course iframe
+  useEffect(() => {
+    const handleMessage = (event: MessageEvent) => {
+      const data: any = event.data;
+      if (data && data.type === 'COURSE_CREATED') {
+        setShowAddModal(false);
+        setSuccessMessage(`Course "${data.courseTitle}" created successfully`);
+        fetchCourses();
+      }
+    };
+    window.addEventListener('message', handleMessage);
+    return () => {
+      window.removeEventListener('message', handleMessage);
+    };
+  }, []);
 
   // Check authentication status
   useEffect(() => {
@@ -190,6 +207,18 @@ export default function AdminDashboardPage() {
       </div>
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
+        {successMessage && (
+          <div className="rounded-lg border border-green-200 bg-green-50 px-4 py-3 text-sm text-green-800 flex items-start justify-between gap-4">
+            <div>{successMessage}</div>
+            <button
+              className="text-green-700 hover:text-green-900"
+              onClick={() => setSuccessMessage(null)}
+              aria-label="Dismiss"
+            >
+              <X className="h-4 w-4" />
+            </button>
+          </div>
+        )}
         {/* KPI Cards */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           <div className="bg-white rounded-xl border shadow-sm p-5">

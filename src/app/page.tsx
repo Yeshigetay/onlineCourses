@@ -73,7 +73,7 @@ export default function Home() {
     >
       <Link
         href="/admin/login"
-        className="fixed top-4 left-4 bg-white/90 hover:bg-white p-2 rounded-lg shadow z-50"
+        className="absolute top-4 left-4 bg-white/90 hover:bg-white p-2 rounded-lg shadow z-50"
         aria-label="Security"
       >
         <FiShield className="w-6 h-6 text-gray-700" />
@@ -138,9 +138,9 @@ export default function Home() {
           <div className="text-center text-gray-500 text-sm">
             <p>
               &copy; 2018 የፈጬ ደብረ ገነት ቅድስት ድንግል ማርያም ቤተክርስቲያን የጽርሐ ጽዮን ሰንበት ት/ቤት 
-              Developed by Yeshigeta And Michael 
             </p>
             <div className="text-center text-gray-500 text-sm"> 
+             
               <a
                 href="https://t.me/tsreha"
                 target="_blank"
@@ -151,15 +151,18 @@ export default function Home() {
               >
                 <FaTelegramPlane className="w-6 h-6" />
               </a>
+              
+            </div>
+            <div className="text-center text-gray-500 text-sm"> 
               <a
-                href="https://instagram.com/benjamingx54"
+                href="https://t.me/Jt12Ws2"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center mt-2 ml-3 text-pink-500 hover:text-pink-600"
-                aria-label="Instagram"
-                title="Instagram"
+                className="inline-flex items-center justify-center mt-2 text-blue-500 hover:text-blue-600"
+                aria-label="Telegram developer"
+                title="@Jt12Ws2 on Telegram"
               >
-                <FaInstagram className="w-6 h-6" />
+                Developed by Yeshigeta And Michael
               </a>
             </div>
 

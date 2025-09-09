@@ -59,12 +59,7 @@ export default function AdminLoginPage() {
         {/* Card */}
         <div className="mx-auto mt-8 w-full max-w-xl">
           <div className="bg-white rounded-2xl shadow-sm border p-6 sm:p-8">
-            <Link
-              href="/"
-              className="inline-flex items-center gap-2 text-sm text-blue-600 hover:text-blue-700"
-            >
-              <ArrowLeft className="h-4 w-4" /> Back to Home
-            </Link>
+           
 
             <form className="mt-6 space-y-5" onSubmit={onSubmit}>
               {error && (

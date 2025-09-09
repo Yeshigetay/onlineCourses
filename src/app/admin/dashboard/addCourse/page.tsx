@@ -40,7 +40,12 @@ export default function AddCoursePage() {
         throw new Error(data?.error || "Failed to create course");
       }
 
-      router.push("/admin/dashboard");
+      if (typeof window !== "undefined" && window.parent) {
+        window.parent.postMessage(
+          { type: "COURSE_CREATED", courseTitle: title },
+          "*"
+        );
+      }
     } catch (err: any) {
       setError(err?.message || "Something went wrong");
     } finally {
