@@ -26,7 +26,10 @@ export default function Home() {
         .then((res) => (res.ok ? res.json() : []))
         .then((data) => {
           if (Array.isArray(data) && data.length) {
-            setGrades(data as Grade[]);
+            const sorted = (data as Grade[])
+              .slice()
+              .sort((a, b) => a.id - b.id);
+            setGrades(sorted);
           } else {
             // If no grades exist in database, show default 12 grades with 0 courses
             const defaultGrades: Grade[] = Array.from({ length: 12 }, (_, i) => ({
@@ -69,7 +72,7 @@ export default function Home() {
   return (
     <div
       className="min-h-screen bg-cover bg-center"
-      style={{ backgroundImage: "url('/bg.jpg')" }}
+      style={{ backgroundImage: "url('/bgn.jpg')" }}
     >
       <Link
         href="/admin/login"
