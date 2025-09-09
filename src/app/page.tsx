@@ -167,6 +167,11 @@ export default function Home() {
               >
                 Developed by Yeshigeta And Michael
               </a>
+              <p className="text-center mt-2">
+            <a href="tel:+251991733134" className="text-blue-600 hover:text-blue-700 underline">
+              +251 991 733 134
+            </a>
+          </p>
             </div>
 
           </div>
