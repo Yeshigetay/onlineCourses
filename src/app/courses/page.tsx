@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { Suspense, useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { useSearchParams, useRouter } from "next/navigation";
 
@@ -14,7 +14,7 @@ type Course = {
   coverImage?: string;
 };
 
-export default function CoursesPage() {
+function CoursesPageInner() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const gradeParam = useMemo(() => (searchParams.get("grade") || "").trim(), [searchParams]);
@@ -259,6 +259,14 @@ export default function CoursesPage() {
         </div>
       </main>
     </div>
+  );
+}
+
+export default function CoursesPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100"><div className="max-w-5xl mx-auto p-6 text-gray-600">Loading courses…</div></div>}>
+      <CoursesPageInner />
+    </Suspense>
   );
 }
 
