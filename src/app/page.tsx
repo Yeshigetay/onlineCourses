@@ -142,7 +142,7 @@ export default function Home() {
             </p>
             <div className="text-center text-gray-500 text-sm"> 
               <a
-                href="https://t.me/Jt12Ws2"
+                href="https://t.me/tsreha"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center justify-center mt-2 text-blue-500 hover:text-blue-600"
