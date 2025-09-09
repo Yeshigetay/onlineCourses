@@ -171,10 +171,11 @@ export default function Home() {
             <a href="tel:+251991733134" className="text-blue-600 hover:text-blue-700 underline">
               +251 991 733 134
             </a>
-            <a href="tel:+251 946916891" className="text-blue-600 hover:text-blue-700 underline">
-              +251 946916891
-            </a>
+            
           </p>
+          <p><a href="tel:+251 946916891" className="text-blue-600 hover:text-blue-700 underline">
+              +251 946916891
+            </a></p>
             </div>
 
           </div>
