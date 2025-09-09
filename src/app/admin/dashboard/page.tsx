@@ -177,7 +177,7 @@ export default function AdminDashboardPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50" style={{ color: '#000' }}>
       {/* Top bar */}
       <div className="sticky top-0 z-10 bg-white/80 backdrop-blur border-b">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 sm:h-16 py-2 flex flex-wrap items-center justify-between gap-2">
