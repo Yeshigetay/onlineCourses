@@ -106,22 +106,27 @@ function CoursesPageInner() {
 
   const handleDownload = async (pdfUrl: string, title: string) => {
     try {
-      const response = await fetch(pdfUrl, { mode: "cors" });
-      if (!response.ok) throw new Error("Failed to fetch file");
-      const blob = await response.blob();
-      const blobUrl = URL.createObjectURL(blob);
-      const link = document.createElement("a");
       const safeFilename = `${(title || "course").replace(/[^\w\s.-]+/g, "_")}.pdf`;
-      link.href = blobUrl;
-      link.download = safeFilename;
-      document.body.appendChild(link);
-      link.click();
-      link.remove();
-      URL.revokeObjectURL(blobUrl);
+      const proxyUrl = `/api/download?url=${encodeURIComponent(pdfUrl)}&filename=${encodeURIComponent(safeFilename)}`;
+
+      // Prefer navigating to the proxy URL which returns attachment headers.
+      // This works more reliably on iOS/Android browsers than blob downloads.
+      const anchor = document.createElement("a");
+      anchor.href = proxyUrl;
+      anchor.rel = "noopener noreferrer";
+      anchor.target = "_self"; // ensure same-tab to maximize mobile compatibility
+      document.body.appendChild(anchor);
+      anchor.click();
+      anchor.remove();
     } catch (err) {
-      console.error("Download failed:", err);
-      // Fallback: open in new tab if direct download fails
+      console.error("Download via proxy failed:", err);
+      // Fallbacks
       try {
+        // Try opening in same tab first (better for mobile)
+        window.location.href = `/api/download?url=${encodeURIComponent(pdfUrl)}&filename=${encodeURIComponent((title || "course") + ".pdf")}`;
+      } catch {}
+      try {
+        // Final fallback: open original PDF in a new tab
         window.open(pdfUrl, "_blank", "noopener,noreferrer");
       } catch {}
     }
