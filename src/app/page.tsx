@@ -1,187 +1,143 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import Link from "next/link";
-import Image from "next/image";
-import { FiShield } from "react-icons/fi";
-import { FaTelegramPlane, FaInstagram } from "react-icons/fa";
+import { useState } from "react";
+import { Lock, User, Eye, EyeOff, ArrowLeft } from "lucide-react";
+import { useRouter } from "next/navigation";
 
+export default function AdminLoginPage() {
+  const router = useRouter();
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-type Grade = {
-  id: number;
-  name: string;
-  description: string;
-  courseCount: number;
-};
+  const onSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError(null);
+    setIsSubmitting(true);
 
-export default function Home() {
-  const [grades, setGrades] = useState<Grade[]>([]);
+    // Simple client-side check for demo credentials
+    const validUsername = "Admin_Miki";
+    const validPassword = "Miki_46@admin";
 
-  useEffect(() => {
-    // Initialize with empty grades array
-    setGrades([]);
-
-    const load = () => {
-      fetch("/api/grades")
-        .then((res) => (res.ok ? res.json() : []))
-        .then((data) => {
-          if (Array.isArray(data) && data.length) {
-            const sorted = (data as Grade[])
-              .slice()
-              .sort((a, b) => a.id - b.id);
-            setGrades(sorted);
-          } else {
-            // If no grades exist in database, show default 12 grades with 0 courses
-            const defaultGrades: Grade[] = Array.from({ length: 12 }, (_, i) => ({
-              id: i + 1,
-              name: `Grade ${i + 1}`,
-              description: `Educational content for Grade ${i + 1} students`,
-              courseCount: 0,
-            }));
-            setGrades(defaultGrades);
-          }
-        })
-        .catch((error) => {
-          console.error("Failed to load grades:", error);
-          // Fallback to default grades on error
-          const defaultGrades: Grade[] = Array.from({ length: 12 }, (_, i) => ({
-            id: i + 1,
-            name: `Grade ${i + 1}`,
-            description: `Educational content for Grade ${i + 1} students`,
-            courseCount: 0,
-          }));
-          setGrades(defaultGrades);
-        });
-    };
-    load();
-
-    const onVisible = () => {
-      if (document.visibilityState === "visible") {
-        load();
-      }
-    };
-    document.addEventListener("visibilitychange", onVisible);
-
-    const intervalId = setInterval(load, 10000);
-    return () => {
-      document.removeEventListener("visibilitychange", onVisible);
-      clearInterval(intervalId);
-    };
-  }, []);
+    if (username === validUsername && password === validPassword) {
+      // Set authentication state in localStorage
+      localStorage.setItem('admin_authenticated', 'true');
+      router.push("/admin/dashboard");
+    } else {
+      setError("Invalid username or password.");
+      setIsSubmitting(false);
+    }
+  };
 
   return (
-    <div
-      className="min-h-screen bg-cover bg-center"
-      style={{ backgroundImage: "url('/bg.jpg')" }}
-    >
-      <Link
-        href="/admin/login"
-        className="absolute top-4 left-4 bg-white/90 hover:bg-white p-2 rounded-lg shadow z-50"
-        aria-label="Security"
-      >
-        <FiShield className="w-6 h-6 text-gray-700" />
-      </Link>
-      {/* Header */}
-      <header className="bg-white shadow-sm border-b">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center py-4">
-            <div className="flex flex-col sm:flex-row items-center sm:items-center space-y-2 sm:space-y-0 sm:space-x-3">
-              <div className=" p-6 rounded-lg">
-                <Image src="/logo.jpg" alt="Logo" width={100} height={100} className="rounded" />
-              </div>
-              <div className="text-center sm:text-left">
-                <h1 className="text-xl font-bold text-gray-900">የፈጬ ደብረ ገነት ቅድስት ድንግል ማርያም ቤተክርስቲያን የጽርሐ ጽዮን ሰንበት ት/ቤት</h1>
-                <p className="text-sm text-gray-500">Mobile Learning Platform</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </header>
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
+      {/* Top Back Button */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4">
+        <Link
+          href="/"
+          className="inline-flex items-center gap-2 rounded-md bg-white/80 backdrop-blur px-3 py-2 text-sm text-gray-700 border hover:bg-white"
+        >
+          <ArrowLeft className="h-4 w-4" /> Back to Home
+        </Link>
+      </div>
 
-      {/* Hero Section */}
-      <section className="py-12 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto text-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4"></h2>
-          <p className="text-lg text-white mb-8 max-w-2xl mx-auto">
-          2ኛ ጴጥ 1፦10
-          "ስለዚህ፥ወንድሞች ሆይ፥መጠራታችኹንና መመረጣችኹን ታጸኑ ዘንድ ከፊት ይልቅ ትጉ እነዚህን ብታደርጉ ከቶ አትሰናከሉምና።"
+      {/* Content */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+        <div className="flex flex-col items-center text-center">
+          <div className="h-16 w-16 rounded-full bg-blue-600 text-white flex items-center justify-center shadow">
+            <Lock className="h-7 w-7" />
+          </div>
+          <h1 className="mt-4 text-3xl font-bold text-gray-900">Admin Login</h1>
+          <p className="mt-2 text-gray-600 max-w-xl">
+            Enter your credentials to access the admin panel
           </p>
         </div>
-      </section>
 
-      {/* Grade Selection Grid */}
-      <section className="pb-12 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-            {grades.map((grade) => (
-              <Link
-                key={grade.id}
-                href={`/courses?grade=${grade.id}`}
-                className="group bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition-all duration-200 border border-gray-100 hover:border-blue-200"
-              >
-                <div className="text-center">
-                  <div className="bg-gradient-to-r from-blue-500 to-purple-600 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
-                    <span className="text-white font-bold text-lg">{grade.id}</span>
-                  </div>
-                  <h3 className="font-semibold text-gray-900 mb-2">{grade.name}</h3>
-                  <p className="text-sm text-gray-500 mb-3">{grade.courseCount} courses</p>
-                  <div className="text-xs text-blue-600 font-medium group-hover:text-blue-700">
-                    View Courses →
-                  </div>
+        {/* Card */}
+        <div className="mx-auto mt-8 w-full max-w-xl">
+          <div className="bg-white rounded-2xl shadow-sm border p-6 sm:p-8">
+           
+
+            <form className="mt-6 space-y-5" onSubmit={onSubmit}>
+              {error && (
+                <div className="rounded-lg border border-red-200 bg-red-50 px-4 py-2 text-sm text-red-700">
+                  {error}
                 </div>
-              </Link>
-            ))}
-          </div>
-        </div>
-      </section>
+              )}
+              {/* Username */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700">
+                  Username
+                </label>
+                <div className="mt-2 relative">
+                  <div className="pointer-events-none absolute inset-y-0 left-0 pl-3 flex items-center text-gray-400">
+                    <User className="h-5 w-5" />
+                  </div>
+                  <input
+                    type="text"
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
+                    placeholder="Enter your username"
+                    className="block w-full rounded-lg border border-gray-300 bg-white py-2.5 pl-10 pr-3 text-gray-900 placeholder-gray-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
+                    required
+                  />
+                </div>
+              </div>
 
-      {/* Footer */}
-      <footer className="bg-white border-t mt-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          <div className="text-center text-gray-500 text-sm">
-            <p>
-              &copy; 2018 የፈጬ ደብረ ገነት ቅድስት ድንግል ማርያም ቤተክርስቲያን የጽርሐ ጽዮን ሰንበት ት/ቤት 
-            </p>
-            <div className="text-center text-gray-500 text-sm"> 
-             
-              <a
-                href="https://t.me/tsrha_tsion_official"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center justify-center mt-2 text-blue-500 hover:text-blue-600"
-                aria-label="Telegram"
-                title="Telegram"
+              {/* Password */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700">
+                  Password
+                </label>
+                <div className="mt-2 relative">
+                  <div className="pointer-events-none absolute inset-y-0 left-0 pl-3 flex items-center text-gray-400">
+                    <Lock className="h-5 w-5" />
+                  </div>
+                  <input
+                    type={showPassword ? "text" : "password"}
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    placeholder="Enter your password"
+                    className="block w-full rounded-lg border border-gray-300 bg-white py-2.5 pl-10 pr-10 text-gray-900 placeholder-gray-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
+                    required
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword((v) => !v)}
+                    className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600"
+                    aria-label={showPassword ? "Hide password" : "Show password"}
+                  >
+                    {showPassword ? (
+                      <EyeOff className="h-5 w-5" />
+                    ) : (
+                      <Eye className="h-5 w-5" />
+                    )}
+                  </button>
+                </div>
+              </div>
+
+              <button
+                type="submit"
+                disabled={isSubmitting}
+                className="w-full rounded-lg bg-blue-600 text-white py-2.5 font-medium hover:bg-blue-700 focus:ring-2 focus:ring-blue-200 disabled:opacity-60 disabled:cursor-not-allowed"
               >
-                <FaTelegramPlane className="w-6 h-6" />
-              </a>
-              
-            </div>
-            <div className="text-center text-gray-500 text-sm"> 
-              <a
-                href="https://t.me/Peace21125"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center justify-center mt-2 text-blue-500 hover:text-blue-600"
-                aria-label="Telegram developer"
-                title="@Jt12Ws2 on Telegram"
-              >
-                Developed by Yeshigeta And Michael
-              </a>
-              <p className="text-center mt-2">
-            <a href="tel:+251991733134" className="text-blue-600 hover:text-blue-700 underline">
-              +251 991733134
-            </a>
-            
+                {isSubmitting ? "Signing in..." : "Sign In"}
+              </button>
+            </form>
+          </div>
+
+          <p className="text-center text-sm text-gray-500 mt-6">
+            Need help? Contact your system administrator.
           </p>
-          <p>
-          <a href="tel:+251 946916891" className="text-blue-600 hover:text-blue-700 underline">
-              +251 946916891
-            </a></p>
-            </div>
-
-          </div>
+          
         </div>
-      </footer>
+      </div>
     </div>
   );
 }
+
+
+
